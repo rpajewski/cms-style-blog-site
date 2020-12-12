@@ -11,14 +11,14 @@ router.get('/', (req, res) => {
                 model: User,
                 attributes: ['username']
             },
-            // {
-            //     model: Comment,
-            //     attributes: ['id', 'comment_text', 'user_id', 'post_id', 'created_at'],
-            //     include: {
-            //         model: User,
-            //         attributes: ['username']
-            //     }
-            // }
+            {
+                model: Comment,
+                attributes: ['id', 'comment_text', 'user_id', 'post_id', 'created_at'],
+                include: {
+                    model: User,
+                    attributes: ['username']
+                }
+            }
         ]
     })
     .then(dbBlogData => res.json(dbBlogData))
@@ -40,19 +40,19 @@ router.get('/:id', (req, res) => {
                 model: User,
                 attributes: ['username']
             },
-            // {
-            //     model: Comment,
-            //     attributes: ['id', 'comment_text', 'user_id', 'post_id', 'created_at'],
-            //     include: {
-            //         model: User,
-            //         attributes: ['username']
-            //     }
-            // }
+            {
+                model: Comment,
+                attributes: ['id', 'comment_text', 'user_id', 'post_id', 'created_at'],
+                include: {
+                    model: User,
+                    attributes: ['username']
+                }
+            }
         ]
     })
     .then(dbBlogData => {
         if (!dbBlogData) {
-            res.status(404).json({ message: 'No blog with this id'})
+            res.status(404).json({ message: 'No blog found with this id!' })
             return
         }
         res.json(dbBlogData)
@@ -65,7 +65,6 @@ router.get('/:id', (req, res) => {
 
 // create blog
 router.post('/', (req, res) => {
-    console.log(req.session.user_id)
     // expects { title: "happy days", content: "thoughts and feelings", username: "username"}
     Blog.create({
         title: req.body.title,
@@ -76,6 +75,50 @@ router.post('/', (req, res) => {
     .catch(err => {
       console.log(err)
       res.status(500).json(err)
+    })
+})
+
+// update blog
+router.put('/:id', (req, res) => {
+    Blog.update({
+        title: req.body.title,
+        content: req.body.content
+    },
+    {
+        where: {
+            id: req.params.id
+        }
+    })
+    .then(dbBlogData => {
+        if (!dbBlogData) {
+            res.status(404).json({ message: 'No blog found with this id!' })
+            return
+        }
+        res.json(dbBlogData)
+    })
+    .catch(err => {
+        console.log(err)
+        res.status(500).json(err)
+    })
+})
+
+// delete blog
+router.delete('/:id', (req, res) => {
+    Blog.destroy({
+        where: {
+            id: req.params.id
+        }
+    })
+    .then(dbBlogData => {
+        if (!dbBlogData) {
+            res.status(404).json({ message: 'No blog found with this id!' })
+            return
+        }
+        res.json(dbBlogData)
+    })
+    .catch(err => {
+        console.log(err)
+        res.status(500).json(err)
     })
 })
 
