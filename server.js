@@ -1,0 +1,43 @@
+const express = require('express')
+const routes = require('controllers')
+const sequelize = require('./config/connection')
+const path = require('path')
+const exphbs = require('express-handlebars')
+const hbs = exphbs.create({})
+const session = require('express-session')
+
+// env destructure
+require('dotenv').config()
+const { PORT, SECRET } = process.env
+
+const app = express()
+const PORT = PORT || 3001
+
+// connect session to sequelize
+const SequelizeStore = require('connect-session-sequelize')(session.Store)
+const sess = {
+    secret: SECRET,
+    cookie: {},
+    resave: false,
+    saveUninitialized: true,
+    store: new SequelizeStore({
+        db: sequelize
+    })
+}
+
+// middleware
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+app.use(express.static(path.join(__dirname, 'public')))
+app.use(session(sess))
+
+app.use(routes)
+
+// template language engine
+app.engine('handlebars', hbs.engine)
+app.set('view engine', 'handlebars')
+
+// connect to server and database
+sequelize.sync({ force: false }).then(() => {
+    app.listen(PORT, () => console.log('Now listening'))
+})
