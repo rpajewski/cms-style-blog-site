@@ -1,6 +1,6 @@
-import User from '/User'
-import Blog from '/Blog'
-import Comment from '/Comment'
+const User = require('./User')
+const Blog = require('./Blog')
+const Comment = require('./Comment')
 
 // associations
 User.hasMany(Blog, {

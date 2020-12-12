@@ -1,5 +1,5 @@
-import { DataTypes, Model } from 'sequelize'
-import sequelize from '../config/connection'
+const { Model, DataTypes } = require('sequelize')
+const sequelize = require('../config/connection')
 
 // blog Model
 class Blog extends Model {

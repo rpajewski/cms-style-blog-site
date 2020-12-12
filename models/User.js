@@ -1,6 +1,6 @@
-import { DataTypes, Model } from 'sequelize'
-import sequelize from '../config/connection'
-import bcrypt from 'bcrypt'
+const { Model, DataTypes } = require('sequelize')
+const sequelize = require('../config/connection')
+const bcrypt = require('bcrypt')
 
 // user Model
 class User extends Model {
@@ -28,7 +28,9 @@ User.init(
             validate: {
                 len: [8]
             }
-        },
+        }
+    },
+    {
         hooks: {
             async beforeCreate(newUserData) {
                 newUserData.password = await bcrypt.hash(newUserData.password, 12)
