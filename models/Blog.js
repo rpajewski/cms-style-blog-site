@@ -22,11 +22,11 @@ Blog.init(
             type: DataTypes.STRING,
             allowNull: false
         },
-        username: {
-            type: DataTypes.STRING,
+        user_id: {
+            type: DataTypes.INTEGER,
             references: {
                 model: 'user',
-                key: 'username'
+                key: 'id'
             }
         }
     },

@@ -53,14 +53,13 @@ router.post('/', (req, res) => {
     // expects { username: 'newUser', password: 'eightLetterPass' }
     User.create(req.body)
     .then(dbUserData => {
-        res.json(dbUserData)
-    })
-    .then(dbUserData => {
         // session variables
         req.session.save(() => {
             req.session.user_id = dbUserData.id;
             req.session.username = dbUserData.username;
             req.session.loggedIn = true;
+
+            res.json(dbUserData)
         })
     })
     .catch(err => {
