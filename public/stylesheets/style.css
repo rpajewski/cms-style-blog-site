@@ -44,6 +44,7 @@ h1 {
 
 h2 {
   font-size: 2rem;
+  margin-left: 10px;
 }
 
 h3 {
@@ -172,9 +173,16 @@ p {
 
 /* CARDS */
 .card {
-  margin: 0 0 20px 0;
+  margin: 10px 10px 20px 10px;
   border: 3px solid var(--dark);
   border-radius: var(--border-radius);
+}
+
+.comment {
+  background-color: var(--secondary);
+  margin: 5px;
+  font-size: 1.5rem;
+  font-weight: 400;
 }
 
 .card-header {
@@ -198,13 +206,17 @@ p {
 
 .form-label {
   font-size: 1.1rem;
-  margin: 0 0 0 5px;
+  margin: 0 0 0 10px;
+}
+
+.margin {
+  margin: 5px 5px 175px 5px
 }
 
 .form-input {
-  width: 100%;
-  padding: 3%;
-  margin: 5px 0;
+  width: 50%;
+  padding: 2%;
+  margin: 5px 10px;
   font-size: 1.2rem;
   border: 2px solid var(--light-dark);
   border-radius: var(--border-radius);
