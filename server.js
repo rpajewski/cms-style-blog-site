@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express');
 const routes = require('./controllers');
 const sequelize = require('./config/connection');
@@ -7,7 +8,6 @@ const session = require('express-session');
 const hbs = exphbs.create({})
 
 // env destructure
-require('dotenv').config()
 const { SECRET } = process.env
 
 const app = express()
@@ -16,7 +16,7 @@ const PORT = process.env.PORT || 3001
 // connect session to sequelize
 const SequelizeStore = require('connect-session-sequelize')(session.Store)
 const sess = {
-    secret: 'Super Secret Secret',
+    secret: SECRET,
     cookie: { maxAge: 3600000},
     resave: false,
     saveUninitialized: true,
